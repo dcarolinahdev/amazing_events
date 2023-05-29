@@ -1,0 +1,134 @@
+*
+{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root
+{
+    --main-color: #DC143C;
+    --main-light: rgb(213, 58, 89);
+    --padding-gral: 1.5rem;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+main {
+    padding: var(--padding-gral);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-ae {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.btn-ae:hover,
+.btn-ae:active:focus {
+    background-color: var(--main-light);
+    color: white;
+}
+
+.btn-outline-ae {
+    color: var(--main-color);
+    border-color: var(--main-color);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.btn-outline-ae:hover,
+.btn-outline-ae:active:focus {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.form-check-input:checked {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.form-check-input:focus,
+.form-control:focus {
+    border-color: var(--main-color);
+    -webkit-box-shadow: 0px 0px 5px rgba(220, 20, 60, 0.5);
+    -moz-box-shadow: 0px 0px 5px rgba(220, 20, 60, 0.5);
+    box-shadow: 0px 0px 5px rgba(220, 20, 60, 0.5);
+}
+
+nav {
+    background-color: lightgray;
+    font-size: 1.6rem;
+}
+
+.navbar {
+    --bs-navbar-padding-y: 2rem;
+    --bs-navbar-padding-x: 2rem;
+}
+
+.navbar-brand img {
+    width: 10rem;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .show>.nav-link {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.nav-link {
+    color: var(--main-light);
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem var(--padding-gral);
+
+    background-color: lightgrey;
+    color: var(--main-color);
+}
+
+footer div.div-right {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+footer div.social {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+footer div.social a {
+    text-decoration: none;
+    color: white;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
