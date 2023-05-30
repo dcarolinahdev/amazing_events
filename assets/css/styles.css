@@ -206,6 +206,22 @@ footer div.social a {
     font-size: 1.2rem;
 }
 
+/* ********** STATS ********** */
+
+.table {
+    width: 70vw;
+}
+
+.t1 th,
+.t2 th,
+.t3 th {
+    vertical-align: middle;
+    text-align: center;
+    width: 33.33%;
+}
+
+/* ********** MEDIA ********** */
+
 /* tablets: 576px a 767px (sm | col-sm-x) */
 @media only screen and (min-width: 576px) {
     .contact {
