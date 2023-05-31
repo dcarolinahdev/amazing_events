@@ -4,7 +4,7 @@ let arrayPast = [];
 function fecthApi() {
   try {
     date = data.fechaActual;
-    arrayPast = data.eventos.filter((item) => item.date > date);
+    arrayPast = data.eventos.filter((item) => item.date <= date);
     console.log(arrayPast)
 
     createCheckBoxes(arrayPast)
@@ -63,15 +63,15 @@ const searchInput = document.getElementById('searchText')
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
   console.log(searchInput.value);
-  filterByText(arrayUpcomingEvents)
+  filterByText(arrayPastEvents)
 })
 
 /*----------------- filter by text and category too, if one  category check the search only filter this category ----------- */
-function filterByText(arrayUpcomingEvents) {
+function filterByText(arrayPastEvents) {
   const text = searchInput.value.toLowerCase();
 
   //Filtrar eventos por categoría seleccionada
-  let filteredEvents = arrayUpcomingEvents;
+  let filteredEvents = arrayPastEvents;
   if (selectedCategories.length > 0) {
     filteredEvents = filteredEvents.filter(event => {
       return selectedCategories.some(category => event.category.toLowerCase().includes(category.toLowerCase()));
@@ -96,20 +96,20 @@ function printEmptyPast() {
 }
 
 /*----function card filter view search------*/
-function printCards(arrayUpcomingEvents) {
+function printCards(arrayPastEvents) {
   const section = document.getElementById('cards');
   section.innerHTML = '';
 
-  for (let i = 0; i < arrayUpcomingEvents.length; i++) {
+  for (let i = 0; i < arrayPastEvents.length; i++) {
     let id = `card${i + 1}`
-    let div = createEventCard(id, arrayUpcomingEvents[i]);
+    let div = createEventCard(id, arrayPastEvents[i]);
     document.getElementById('cards').appendChild(div)
   }
 }
 
 /* FUNCTION: Creación de Checkboxes */
-function createCheckBoxes(arrayUpcomingEvents) {
-    let categories = [... new Set(arrayUpcomingEvents.map(evento => evento.category))]
+function createCheckBoxes(arrayPastEvents) {
+    let categories = [... new Set(arrayPastEvents.map(evento => evento.category))]
     let categories_check = categories.map(category => { return { id: category.toLowerCase().replaceAll(" ", ""), label: category } })
     const containerCategories = document.getElementById('categories');
 
