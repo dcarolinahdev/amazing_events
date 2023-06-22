@@ -78,6 +78,11 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0px 0px 5px rgba(220, 20, 60, 0.5);
 }
 
+.form-search {
+    display: flex;
+    gap: 4px;
+}
+
 nav {
     background-color: lightgray;
     font-size: 1.6rem;
