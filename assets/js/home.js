@@ -1,15 +1,21 @@
-function fecthApi() {
+/* FUNCTION: fetch API */
+async function fecthApi() {
     try {
-        let events = data.eventos
+        // head async
+        let url = `https://pro-talento.up.railway.app/api/amazing/`;
+        let response = await fetch(url);
+        response = await response.json();
+        // in async mode response.response has the events
+        // in sync mode data.eventos has the events
 
-        createCheckBoxes(events)
-        printCards(events)
+        createCheckBoxes(response.response)
+        printCards(response.response)
 
-        /*document.getElementById('buttonSearch').addEventListener('click', (event) => {
-            event.preventDefault()
-            filterData()
+        document.getElementById('buttonSearch').addEventListener('click', (event) => {
+            event.preventDefault();
+            filterData();
         })
-        document.querySelectorAll('.class_checks').forEach((each) =>each.addEventListener('click', filterData))*/
+        document.querySelectorAll('.class_checks').forEach((each) =>each.addEventListener('click', filterData))
 
     } catch (error) {
         console.log(error)
@@ -18,15 +24,22 @@ function fecthApi() {
 
 fecthApi()
 
-function filterData() {
+/* FUNCTION: Filtro de eventos */
+async function filterData() {
     try {
+        // this will transform the text input to lowercase before the search
         let texto = document.getElementById('searchInTitle').value.toLowerCase();
+        // this will take only the checkboxes that are checked
         let checks = Array.from(document.querySelectorAll('.class_checks:checked')).map(each => each.value);
-        //
-        if (events.length == 0) {
-        printEmpty()
+        // head async (see lines 8 and 9)
+        let url = `https://pro-talento.up.railway.app/api/amazing/?name=${texto}&category=${checks.join(',')}`;
+        let response = await fetch(url);
+        response = await response.json();
+
+        if (response.response.length == 0) {
+            printEmpty()
         } else {
-        printCards(events)
+            printCards(response.response)
         }
     } catch (error) {
         console.log(error)
@@ -34,8 +47,8 @@ function filterData() {
 }
 
 /* FUNCTION: Retorna UN div para cada evento
- * Recibe un id que será el identificador del evento
- * y un objeto que corresponde al evento */
+* Recibe un id que será el identificador del evento
+* y un objeto que corresponde al evento */
 function createEventCard(id, objetoEvento) {
     let div = document.createElement('div');
     div.id = id;
@@ -64,7 +77,7 @@ function printCards(array) {
 
         let id = `card${i + 1}`
         let div = createEventCard(id, array[i]);
-        document.getElementById('cards').appendChild(div)
+        containerCategory.appendChild(div);
 
     }
 }
@@ -108,6 +121,6 @@ function printEmpty() {
 
     containerCards.innerHTML = `
         <div class="alert alert-danger" role="alert" style="display:flex; justify-content:center; padding:20px; margin:5px 20px 0px 20px font-family: 'Secular One', sans-serif;" >
-        <img  src="./images/logo-warning-message.png" alt="">
+        <img  src="./images/logo-warning-message.png" alt="empty search image">
         THE ENTERED TITLE DOES NOT HAVE CHARACTERISTICS TO DISPLAY, ENTER ANOTHER TEXT FIELD</div>`;
 }
