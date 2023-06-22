@@ -169,6 +169,7 @@ footer div.social a:hover {
     width: 90%;
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
 }
 
 .cards {
@@ -251,6 +252,16 @@ footer div.social a:hover {
 
 /* phones */
 @media only screen and (max-width: 575px) {
+    .filters {
+        align-items: center;
+    }
+    #categories {
+        width: min-content;
+        flex-direction: column;
+    }
+    .form-search {
+        width: 50%;
+    }
     .main-events {
         margin-top: 4rem;
     }
