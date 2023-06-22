@@ -1,17 +1,24 @@
+let url = `https://pro-talento.up.railway.app/api/amazing/`;
 let date = '';
-let arrayPast = [];
+let arrayUpcoming = [];
 
-function fecthApi() {
+async function fecthApi() {
   try {
-    date = data.fechaActual;
-    arrayPast = data.eventos.filter((item) => item.date > date);
-    console.log(arrayPast)
+    // head async
+    let response = await fetch(url);
+    response = await response.json();
+    // in async mode response.response has the events
+    // in async mode response.date has the date base for searchs
+    // in sync mode data.eventos has the events
 
-    createCheckBoxes(arrayPast)
-    printCards(arrayPast)
+    date = response.date;
+    arrayUpcoming = response.response.filter((item) => item.date > date);
 
-    //document.getElementById('buttonSearch').addEventListener('click', filterData)
-    //document.querySelectorAll('.class_checks').forEach((each) => each.addEventListener('click', filterData))
+    createCheckBoxes(arrayUpcoming)
+    printCards(arrayUpcoming)
+
+    document.getElementById('buttonSearch').addEventListener('click', filterData);
+    document.querySelectorAll('.class_checks').forEach((each) => each.addEventListener('click', filterData));
 
   } catch (error) {
     console.log(error);
@@ -20,16 +27,21 @@ function fecthApi() {
 
 fecthApi()
 
-function filterData() {
+async function filterData() {
   try {
+    // this will transform the text input to lowercase before the search
     let texto = document.getElementById('searchText').value.toLowerCase();
+    // this will take only the checkboxes that are checked
     let checks = Array.from(document.querySelectorAll('.class_checks:checked')).map(each => each.value);
-    //console.log(checks);
+    // head async
+    let url = `https://pro-talento.up.railway.app/api/amazing/?name=${texto}&category=${checks.join(',')}`;
+    let response = await fetch(url);
+    response = await response.json();
 
-    if (arrayPast.length == 0) {
-      printEmptyPast()
+    if (response.response.length == 0) {
+      printEmptyUpcoming()
     } else {
-      printCards(arrayPast)
+      printCards(response.response)
     }
   } catch (error) {
     console.log(error)
@@ -56,7 +68,7 @@ function createEventCard(id, objetoEvento) {
     return div
 }
 
-/*----- filter text search-------- */
+/*----- filter text search--------*/
 const searchButton = document.getElementById('buttonSearch');
 const searchInput = document.getElementById('searchText')
 
@@ -86,7 +98,7 @@ function filterByText(arrayUpcomingEvents) {
 
 }
 
-function printEmptyPast() {
+function printEmptyUpcoming() {
   const messageCard = document.getElementById('section');
   messageCard.innerHTML = `
     <div class="alert alert-danger" role="alert" style="display:flex; justify-content:center; padding:20px; margin:5px 20px 0px 20px font-family: 'Secular One', sans-serif;" >
@@ -95,23 +107,21 @@ function printEmptyPast() {
   return;
 }
 
-/*----function card filter view search------*/
 function printCards(arrayUpcomingEvents) {
-  const section = document.getElementById('cards');
-  section.innerHTML = '';
+  const section = document.getElementById('cards')
+  section.innerHTML = ''
 
   for (let i = 0; i < arrayUpcomingEvents.length; i++) {
     let id = `card${i + 1}`
-    let div = createEventCard(id, arrayUpcomingEvents[i]);
-    document.getElementById('cards').appendChild(div)
+    let div = createEventCard(id, arrayUpcomingEvents[i])
+    section.appendChild(div)
   }
 }
 
-/* FUNCTION: Creación de Checkboxes */
 function createCheckBoxes(arrayUpcomingEvents) {
     let categories = [... new Set(arrayUpcomingEvents.map(evento => evento.category))]
     let categories_check = categories.map(category => { return { id: category.toLowerCase().replaceAll(" ", ""), label: category } })
-    const containerCategories = document.getElementById('categories');
+    const containerCategories = document.getElementById('categories')
 
     categories_check.forEach(category => {
         // create input type check
@@ -123,6 +133,7 @@ function createCheckBoxes(arrayUpcomingEvents) {
         input_check.setAttribute('id', category.id);
         input_check.setAttribute('name', category.label);
         input_check.setAttribute('value', category.label);
+        input_check.addEventListener('click',filterData);
         // create label
         const label = document.createElement('label');
         label.classList.add("label-spform");
